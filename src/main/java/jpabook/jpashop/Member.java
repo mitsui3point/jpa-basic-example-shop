@@ -1,9 +1,8 @@
 package jpabook.jpashop;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Member {
@@ -11,6 +10,9 @@ public class Member {
     @GeneratedValue
     @Column(name = "MEMBER_ID")
     private Long id;
+
+    @OneToMany(mappedBy = "member")
+    private List<Order> orders = new ArrayList<>();
 
     private String name;
     private String city;
@@ -21,39 +23,38 @@ public class Member {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public List<Order> getOrders() {
+        return orders;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getCity() {
         return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
     }
 
     public String getStreet() {
         return street;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
     public String getZipcode() {
         return zipcode;
     }
 
-    public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
+    //== 연관관계 편의 메서드==//
+    public static Member create(String name, String city, String street, String zipcode) {
+        Member member = new Member();
+        member.name = name;
+        member.city = city;
+        member.street = street;
+        member.zipcode = zipcode;
+        return member;
+    }
+
+    public void addOrders(Order order) {
+        this.getOrders().add(order);//연관관계 주인
+        order.setMember(this);
     }
 }

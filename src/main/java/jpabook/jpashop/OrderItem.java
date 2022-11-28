@@ -1,9 +1,6 @@
 package jpabook.jpashop;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class OrderItem {
@@ -12,11 +9,13 @@ public class OrderItem {
     @Column(name = "ORDER_ITEM_ID")
     private Long id;
 
-    @Column(name = "ORDER_ID")
-    private Long orderId;
+    @ManyToOne
+    @JoinColumn(name = "ORDER_ID")
+    private Order order;
 
-    @Column(name = "ITEM_ID")
-    private Long itemId;
+    @ManyToOne
+    @JoinColumn(name = "ITEM_ID")
+    private Item item;
 
     private int orderPrice;
 
@@ -26,39 +25,32 @@ public class OrderItem {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Order getOrder() {
+        return order;
     }
 
-    public Long getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
-    }
-
-    public Long getItemId() {
-        return itemId;
-    }
-
-    public void setItemId(Long itemId) {
-        this.itemId = itemId;
+    public Item getItem() {
+        return item;
     }
 
     public int getOrderPrice() {
         return orderPrice;
     }
 
-    public void setOrderPrice(int orderPrice) {
-        this.orderPrice = orderPrice;
-    }
-
     public int getCount() {
         return count;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    //== 연관관계 편의 메서드==//
+    public static OrderItem create(Item item, int price, int count) {
+        OrderItem orderItem = new OrderItem();
+        orderItem.item = item;
+        orderItem.orderPrice = price;
+        orderItem.count = count;
+        return orderItem;
+    }
+
+    public void putOrder(Order order) {
+        this.order = order;
     }
 }

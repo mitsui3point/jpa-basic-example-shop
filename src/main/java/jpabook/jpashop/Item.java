@@ -13,40 +13,32 @@ public class Item {
     private Long id;
 
     private String name;
-
     private int price;
-
     private int stockQuantity;
+
+    public static Item create(String name, int price, int stockQuantity) {
+        Item item = new Item();
+        item.name = name;
+        item.price = price;
+        item.stockQuantity = stockQuantity;
+        return item;
+    }
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getPrice() {
         return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
     }
 
     public int getStockQuantity() {
         return stockQuantity;
     }
 
-    public void setStockQuantity(int stockQuantity) {
-        this.stockQuantity = stockQuantity;
-    }
+    //== 연관관계 편의 메서드==//
 }

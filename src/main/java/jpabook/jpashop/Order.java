@@ -4,6 +4,8 @@ import jpabook.jpashop.constant.OrderStatus;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static javax.persistence.EnumType.STRING;
 
@@ -15,8 +17,12 @@ public class Order {
     @Column(name = "ORDER_ID")
     private Long id;
 
-    @Column(name = "MEMBER_ID")
-    private Long memberId;
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
+
+    @OneToMany(mappedBy = "order")
+    private List<OrderItem> orderItems = new ArrayList<>();
 
     private LocalDateTime orderDate;//ORDERDATE -> spring jpa default 변환 ORDER_DATE, order_date
 
@@ -27,31 +33,41 @@ public class Order {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Member getMember() {
+        return member;
     }
 
-    public Long getMemberId() {
-        return memberId;
-    }
-
-    public void setMemberId(Long memberId) {
-        this.memberId = memberId;
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
     }
 
     public LocalDateTime getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(LocalDateTime orderDate) {
-        this.orderDate = orderDate;
-    }
-
     public OrderStatus getStatus() {
         return status;
     }
 
-    public void setStatus(OrderStatus status) {
-        this.status = status;
+    //== 연관관계 편의 메서드==//
+    public static Order create(LocalDateTime orderDate, OrderStatus status) {
+        Order order = new Order();
+        order.orderDate = orderDate;
+        order.status = status;
+        return order;
+    }
+
+    public void putMember(Member member) {
+        setMember(member); //연관관계 주인
+        member.getOrders().add(this);
+    }
+
+    public void addOrderItems(OrderItem orderItem) {
+        orderItem.putOrder(this); //연관관계 주인
+        this.orderItems.add(orderItem);
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
     }
 }
