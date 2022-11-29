@@ -1,6 +1,10 @@
 package jpabook.jpashop;
 
 import jpabook.jpashop.constant.OrderStatus;
+import jpabook.jpashop.domain.Item;
+import jpabook.jpashop.domain.Member;
+import jpabook.jpashop.domain.Order;
+import jpabook.jpashop.domain.OrderItem;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,9 +17,6 @@ import javax.persistence.Persistence;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-
-import static jpabook.jpashop.context.JpaPersistenceContext.create;
 
 public class RelationalMappingTest {
     EntityManagerFactory emf;
