@@ -24,6 +24,10 @@ public class Order {
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems = new ArrayList<>();
 
+    @OneToOne
+    @JoinColumn(name = "DELIVERY_ID")
+    private Delivery delivery;
+
     private LocalDateTime orderDate;//ORDERDATE -> spring jpa default 변환 ORDER_DATE, order_date
 
     @Enumerated(STRING)
