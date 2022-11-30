@@ -1,7 +1,9 @@
 package jpabook.jpashop;
 
 import jpabook.jpashop.constant.OrderStatus;
-import jpabook.jpashop.domain.Item;
+import jpabook.jpashop.domain.item.Album;
+import jpabook.jpashop.domain.item.Book;
+import jpabook.jpashop.domain.item.Item;
 import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.domain.Order;
 import jpabook.jpashop.domain.OrderItem;
@@ -146,8 +148,8 @@ public class RelationalMappingTest {
         //given
         member = Member.create("name", "city", "street", "zipcode");
 
-        item1 = Item.create("name1", 10000, 100);
-        item2 = Item.create("name2", 20000, 200);
+        item1 = Album.create("name1", 10000, 100, "artist", "etc");
+        item2 = Book.create("name2", 20000, 200, "author", "isbn");
 
         orderItem1 = OrderItem.create(item1, item1.getPrice(), 10);
         orderItem2 = OrderItem.create(item2, item2.getPrice(), 20);

@@ -1,11 +1,15 @@
-package jpabook.jpashop.domain;
+package jpabook.jpashop.domain.item;
+
+import jpabook.jpashop.domain.Category;
+import jpabook.jpashop.domain.base.BaseEntity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Item {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+public abstract class Item extends BaseEntity {
     @Id
     @GeneratedValue
     @Column(name = "ITEM_ID")
@@ -17,14 +21,6 @@ public class Item {
 
     @ManyToMany(mappedBy = "items")
     private List<Category> categories = new ArrayList<>();
-
-    public static Item create(String name, int price, int stockQuantity) {
-        Item item = new Item();
-        item.name = name;
-        item.price = price;
-        item.stockQuantity = stockQuantity;
-        return item;
-    }
 
     public Long getId() {
         return id;
@@ -42,5 +38,17 @@ public class Item {
         return stockQuantity;
     }
 
+
     //== 연관관계 편의 메서드==//
+    protected void putName(String name) {
+        this.name = name;
+    }
+
+    protected void putPrice(int price) {
+        this.price = price;
+    }
+
+    protected void putStockQuantity(int stockQuantity) {
+        this.stockQuantity = stockQuantity;
+    }
 }

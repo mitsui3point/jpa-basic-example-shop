@@ -1,11 +1,12 @@
 package jpabook.jpashop.domain;
 
 import jpabook.jpashop.constant.DeliveryStatus;
+import jpabook.jpashop.domain.base.BaseEntity;
 
 import javax.persistence.*;
 
 @Entity
-public class Delivery {
+public class Delivery extends BaseEntity {
 
     @Id
     @GeneratedValue

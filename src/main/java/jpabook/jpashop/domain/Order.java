@@ -1,6 +1,7 @@
 package jpabook.jpashop.domain;
 
 import jpabook.jpashop.constant.OrderStatus;
+import jpabook.jpashop.domain.base.BaseEntity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,7 +12,7 @@ import static javax.persistence.EnumType.STRING;
 
 @Entity
 @Table(name = "ORDERS") //RDBMS ORDER BY 예약어와 중복되어 사용시 기능상 문제가 생기는 RDBMS도 있다.
-public class Order {
+public class Order extends BaseEntity {
     @Id
     @GeneratedValue
     @Column(name = "ORDER_ID")
